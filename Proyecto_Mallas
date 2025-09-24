@@ -1,0 +1,180 @@
+import tkinter as tk
+from tkinter import messagebox
+from matplotlib.figure import Figure
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+import numpy as np
+import matplotlib.patches as patches
+
+# Lista para guardar los taladros
+taladros = []
+
+def agregar_taladro():
+    try:
+        x = float(entry_tx.get())
+        y = float(entry_ty.get())
+        r = float(entry_tr.get())
+
+        if r <= 0:
+            raise ValueError("El radio del taladro debe ser positivo")
+
+        taladros.append((x, y, r))
+        messagebox.showinfo("Taladro agregado", f"Se agregó taladro en ({x}, {y}) con radio {r}")
+
+    except ValueError as e:
+        messagebox.showerror("Error", str(e))
+
+def dibujar_frente():
+    try:
+        ancho = float(entry_ancho.get())
+        alto = float(entry_alto.get())
+        radio = float(entry_radio.get())
+
+        if ancho <= 0 or alto <= 0 or radio < 0:
+            raise ValueError("Las dimensiones deben ser positivas y el radio >= 0")
+
+        if radio * 2 > min(ancho, alto):
+            raise ValueError("El radio es demasiado grande para el tamaño del frente.")
+
+        fig = Figure(figsize=(5, 4), dpi=100)
+        ax = fig.add_subplot(111)
+        ax.clear()
+
+        def arco(cx, cy, r, start_angle, end_angle, num=20):
+            theta = np.linspace(np.radians(start_angle), np.radians(end_angle), num)
+            x = cx + r * np.cos(theta)
+            y = cy + r * np.sin(theta)
+            return x, y
+
+        x_total = []
+        y_total = []
+
+        if var_ii.get():
+            x1, y1 = arco(radio, radio, radio, 180, 270)
+        else:
+            x1 = [0]; y1 = [0]
+
+        if var_ii.get() and var_id.get():
+            x2 = np.linspace(radio, ancho - radio, 20)
+        elif var_ii.get():
+            x2 = np.linspace(radio, ancho, 20)
+        elif var_id.get():
+            x2 = np.linspace(0, ancho - radio, 20)
+        else:
+            x2 = np.linspace(0, ancho, 20)
+        y2 = np.full_like(x2, 0)
+
+        if var_id.get():
+            x3, y3 = arco(ancho - radio, radio, radio, 270, 360)
+        else:
+            x3 = [ancho]; y3 = [0]
+
+        if var_id.get() and var_sd.get():
+            y4 = np.linspace(radio, alto - radio, 20)
+        elif var_id.get():
+            y4 = np.linspace(radio, alto, 20)
+        elif var_sd.get():
+            y4 = np.linspace(0, alto - radio, 20)
+        else:
+            y4 = np.linspace(0, alto, 20)
+        x4 = np.full_like(y4, ancho)
+
+        if var_sd.get():
+            x5, y5 = arco(ancho - radio, alto - radio, radio, 0, 90)
+        else:
+            x5 = [ancho]; y5 = [alto]
+
+        if var_sd.get() and var_si.get():
+            x6 = np.linspace(ancho - radio, radio, 20)
+        elif var_sd.get():
+            x6 = np.linspace(ancho - radio, 0, 20)
+        elif var_si.get():
+            x6 = np.linspace(ancho, radio, 20)
+        else:
+            x6 = np.linspace(ancho, 0, 20)
+        y6 = np.full_like(x6, alto)
+
+        if var_si.get():
+            x7, y7 = arco(radio, alto - radio, radio, 90, 180)
+        else:
+            x7 = [0]; y7 = [alto]
+
+        if var_si.get() and var_ii.get():
+            y8 = np.linspace(alto - radio, radio, 20)
+        elif var_si.get():
+            y8 = np.linspace(alto - radio, 0, 20)
+        elif var_ii.get():
+            y8 = np.linspace(alto, radio, 20)
+        else:
+            y8 = np.linspace(alto, 0, 20)
+        x8 = np.full_like(y8, 0)
+
+        x_total = np.concatenate([x1, x2, x3, x4, x5, x6, x7, x8, [x1[0]]])
+        y_total = np.concatenate([y1, y2, y3, y4, y5, y6, y7, y8, [y1[0]]])
+
+        ax.plot(x_total, y_total, 'b-', linewidth=2)
+        ax.set_title("Frente de Minado con Taladros")
+        ax.set_xlim(-1, ancho + 1)
+        ax.set_ylim(-1, alto + 1)
+        ax.set_aspect('equal')
+        ax.set_xlabel("Ancho (m)")
+        ax.set_ylabel("Altura (m)")
+        ax.grid(True)
+
+        # Dibujar taladros
+        for x, y, r in taladros:
+            circle = patches.Circle((x, y), r, edgecolor='red', facecolor='none', linewidth=1.5)
+            ax.add_patch(circle)
+
+        canvas = FigureCanvasTkAgg(fig, master=ventana)
+        canvas.draw()
+        canvas.get_tk_widget().grid(row=12, column=0, columnspan=4)
+
+    except ValueError as e:
+        messagebox.showerror("Error de entrada", str(e))
+
+# Ventana principal
+ventana = tk.Tk()
+ventana.title("Diseño de Frente de Minado con Taladros")
+
+# Entradas principales
+tk.Label(ventana, text="Ancho (m):").grid(row=0, column=0, sticky="e")
+entry_ancho = tk.Entry(ventana)
+entry_ancho.grid(row=0, column=1)
+
+tk.Label(ventana, text="Altura (m):").grid(row=1, column=0, sticky="e")
+entry_alto = tk.Entry(ventana)
+entry_alto.grid(row=1, column=1)
+
+tk.Label(ventana, text="Radio en esquinas (m):").grid(row=2, column=0, sticky="e")
+entry_radio = tk.Entry(ventana)
+entry_radio.insert(0, "0")
+entry_radio.grid(row=2, column=1)
+
+# Checkboxes de esquinas
+tk.Label(ventana, text="Aplicar radio en:").grid(row=3, column=0, columnspan=2)
+var_si = tk.BooleanVar(value=False)
+var_sd = tk.BooleanVar(value=False)
+var_ii = tk.BooleanVar(value=False)
+var_id = tk.BooleanVar(value=False)
+tk.Checkbutton(ventana, text="Superior Izquierda", variable=var_si).grid(row=4, column=0)
+tk.Checkbutton(ventana, text="Superior Derecha", variable=var_sd).grid(row=4, column=1)
+tk.Checkbutton(ventana, text="Inferior Izquierda", variable=var_ii).grid(row=5, column=0)
+tk.Checkbutton(ventana, text="Inferior Derecha", variable=var_id).grid(row=5, column=1)
+
+# Entradas de taladros
+tk.Label(ventana, text="Taladro - X (m):").grid(row=6, column=0, sticky="e")
+entry_tx = tk.Entry(ventana)
+entry_tx.grid(row=6, column=1)
+
+tk.Label(ventana, text="Taladro - Y (m):").grid(row=7, column=0, sticky="e")
+entry_ty = tk.Entry(ventana)
+entry_ty.grid(row=7, column=1)
+
+tk.Label(ventana, text="Taladro - Radio (m):").grid(row=8, column=0, sticky="e")
+entry_tr = tk.Entry(ventana)
+entry_tr.grid(row=8, column=1)
+
+tk.Button(ventana, text="Agregar taladro", command=agregar_taladro).grid(row=9, column=0, columnspan=2, pady=5)
+tk.Button(ventana, text="Diseñar frente", command=dibujar_frente).grid(row=10, column=0, columnspan=2, pady=10)
+
+ventana.mainloop()
