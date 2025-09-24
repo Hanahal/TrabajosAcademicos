@@ -6,6 +6,7 @@ import matplotlib.patches as patches
 import math
 import pandas as pd
 
+
 st.title("Diseño de Sostenimiento en Minería Subterránea")
 st.subheader("Diseño de Cimbras 'H'")
 st.subheader("Metodología de Cemal Biron")

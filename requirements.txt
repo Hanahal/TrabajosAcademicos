@@ -1,6 +1,4 @@
 streamlit
 numpy
 pandas
-matplotlib.pyplot
-matplotlib.patches
-math
+matplotlib==3.9.2
