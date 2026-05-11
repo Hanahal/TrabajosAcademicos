@@ -1,5 +1,8 @@
-plotly
-pandas
-numpy
-matplotlib==3.9.2
 streamlit
+numpy
+pandas
+plotly
+matplotlib==3.9.2
+reportlab
+Pillow
+plotly
