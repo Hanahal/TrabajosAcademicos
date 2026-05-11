@@ -22,90 +22,147 @@ st.set_page_config(
 # FORZAR DESAPARICIÓN TOTAL DEL SIDEBAR
 st.markdown("""
 <style>
+
+ /* ─────────────────────────────────────────────
+      OCULTAR SIDEBAR
+   ───────────────────────────────────────────── */
 section[data-testid="stSidebar"] {display: none !important;}
 div[data-testid="stSidebarNav"] {display: none !important;}
-</style>
-""", unsafe_allow_html=True)
 
-# ─────────────────────────────────────────────
-#  CUSTOM CSS (MISMO ESTILO TUYO)
-# ─────────────────────────────────────────────
-st.markdown("""
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=Source+Sans+3:wght@300;400;600&display=swap');
 
-html, body, [class*="css"] {
-    font-family: 'Source Sans 3', sans-serif;
+ /* ─────────────────────────────────────────────
+      TIPOGRAFÍA GLOBAL — LATO
+   ───────────────────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap');
+
+html, body, [class*="css"], .stApp {
+    font-family: 'Lato', sans-serif !important;
+    font-size: 12px !important;
+    color: #e6edf3 !important;
 }
 
-.stApp {
-    background: #0d1117;
-    color: #e6edf3;
-}
-
-/* TITULOS */
-h1, h2, h3 {
-    font-family: 'Oswald', sans-serif;
+/* Titulos principales */
+h1, h2 {
+    font-family: 'Lato', sans-serif !important;
+    font-weight: 900 !important;
+    font-size: 14px !important;
+    text-transform: uppercase;
     letter-spacing: 0.04em;
-    color: #f0a500;
+    color: #f0a500 !important;
 }
 
-/* BANNER */
+/* Titulos secundarios */
+h3, h4 {
+    font-family: 'Lato', sans-serif !important;
+    font-weight: 700 !important;
+    font-size: 13px !important;
+    color: #f0a500 !important;
+}
+
+
+ /* ─────────────────────────────────────────────
+      FONDO GENERAL
+   ───────────────────────────────────────────── */
+.stApp {
+    background: #0b253a !important;
+    color: #e6edf3 !important;
+}
+
+
+ /* ─────────────────────────────────────────────
+      PESTAÑAS — COLORES Y TIPOGRAFÍA
+   ───────────────────────────────────────────── */
+.stTabs [data-baseweb="tab"] {
+    font-family: 'Lato', sans-serif !important;
+    font-size: 12px !important;
+    font-weight: 700 !important;
+    color: #e6edf3 !important;
+}
+
+.stTabs [aria-selected="true"] {
+    color: #ffffff !important;
+    font-weight: 900 !important;
+    border-bottom: 3px solid #f0a500 !important;
+}
+
+
+ /* ─────────────────────────────────────────────
+      BANNER
+   ───────────────────────────────────────────── */
 .hero-banner {
     background: linear-gradient(135deg, #1a2332 0%, #0d1117 50%, #1a1f26 100%);
     border: 1px solid #f0a500;
-    border-left: 6px solid #f0a500;
+    border-left: 4px solid #f0a500;
     border-radius: 4px;
-    padding: 24px 32px;
-    margin-bottom: 28px;
-}
-.hero-banner h1 {
-    color: #f0a500;
-    font-size: 2rem;
-    margin: 0 0 4px 0;
-}
-.hero-banner p {
-    color: #8b949e;
-    font-size: 0.95rem;
+    padding: 8px 14px;
+    margin-bottom: 10px;
 }
 
-/* TABLAS */
+.hero-banner h1 {
+    color: #f0a500;
+    font-size: 18px !important;  /* equivalente a 14 pt */
+}
+
+.hero-banner p {
+    color: #8b949e;
+    font-size: 12px !important;
+}
+
+
+ /* ─────────────────────────────────────────────
+      TABLAS
+   ───────────────────────────────────────────── */
 .styled-table {
     width: 100%;
     border-collapse: collapse;
-    font-size: 0.88rem;
+    font-size: 12px !important;
 }
+
 .styled-table th {
     background: #1f2937;
     color: #f0a500;
     padding: 8px 12px;
     text-transform: uppercase;
+    font-size: 12px !important;
 }
+
 .styled-table td {
     padding: 7px 12px;
     border-bottom: 1px solid #1f2937;
     color: #c9d1d9;
+    font-size: 12px !important;
 }
-.styled-table tr:hover td { background: #1a2030; }
 
-/* INFO BOX */
+.styled-table tr:hover td {
+    background: #1a2030;
+}
+
+
+ /* ─────────────────────────────────────────────
+      INFO BOX
+   ───────────────────────────────────────────── */
 .info-box {
     background: #1a2332;
     border-left: 4px solid #388bfd;
     padding: 12px 16px;
-    font-size: 0.9rem;
+    font-size: 12px !important;
 }
 
-/* FORMULAS */
+
+ /* ─────────────────────────────────────────────
+      FORMULAS
+   ───────────────────────────────────────────── */
 .formula-box {
     background: #0d1117;
     border: 1px solid #30363d;
     border-radius: 6px;
     padding: 16px 20px;
     color: #79c0ff;
+    font-size: 12px !important;
     font-family: 'Courier New', monospace;
     text-align: center;
 }
+
 </style>
 """, unsafe_allow_html=True)
 
@@ -138,7 +195,7 @@ def render_table(df):
 # ─────────────────────────────────────────────
 st.markdown("""
 <div class="hero-banner">
-  <h1>⛏️ Cemented Rock Fill (CRF) </h1>
+  <h1> Cemented Rock Fill (CRF) </h1>
   <p>Análisis técnico-económico de factibilidad del relleno detrítico cementado · Método Sub Level Stoping</p>
 </div>
 """, unsafe_allow_html=True)
@@ -154,20 +211,20 @@ tabs = st.tabs([
 ])
 
 # ╔══════════════════════════════════════════════╗
-#  TAB 1 — DISEÑOS DE MEZCLA (TOTALMENTE EDITABLE)
+#  TAB 1 — DISEÑOS DE MEZCLA (COMPLETO ACTUALIZADO)
 # ╚══════════════════════════════════════════════╝
 with tabs[0]:
 
-    st.markdown("### 🧪 Diseños de Mezcla — Prueba Piloto")
+    st.markdown("###  Diseños de Mezcla — Prueba Piloto")
 
     st.markdown("""
-    Se ingresa manualmente los valores de los 4 diseños
+    Se ingresa los valores de 4 diseños de muestra
     (D01 – D04).  
-    Se ingresará las resistencias reales obtenidas en campo.
+    Se ingresan las resistencias reales obtenidas en campo.
     """)
 
     # ----------------------------
-    # DATOS INICIALES (si no existen)
+    # DATOS INICIALES
     # ----------------------------
     if "designs_df" not in st.session_state:
 
@@ -182,9 +239,9 @@ with tabs[0]:
     df = st.session_state.designs_df.copy()
 
     # -------------------------------------------
-    # ENTRADAS EDITABLES PARA LOS 4 DISEÑOS
+    # ENTRADAS EDITABLES PARA DISEÑOS
     # -------------------------------------------
-    st.markdown("#### ✏️ Ingresar Datos del Diseño (kg/m³ y L/m³)")
+    st.markdown("####  Ingresar Datos del Diseño (kg/m³ y L/m³)")
 
     edit_cols = st.columns(4)
 
@@ -217,27 +274,26 @@ with tabs[0]:
             )
 
     # ------------------------------------------------------
-    # CALCULOS AUTOMATICOS: % cemento, % agua, % desmonte
+    # CÁLCULOS: porcentajes y relación A/C
     # ------------------------------------------------------
     df["Total"] = df["Cemento (kg/m³)"] + df["Agua (L/m³)"] + df["Desmonte (kg/m³)"]
     df["Cemento (%)"] = df["Cemento (kg/m³)"] / df["Total"] * 100
     df["Agua (%)"] = df["Agua (L/m³)"] / df["Total"] * 100
     df["Desmonte (%)"] = df["Desmonte (kg/m³)"] / df["Total"] * 100
 
-    # Relación A/C
     df["A/C"] = df["Agua (L/m³)"] / df["Cemento (kg/m³)"]
 
-    # Guardar en session_state
     st.session_state.designs_df = df
 
     # -------------------------------
-    # MOSTRAR TABLA COMPLETA
+    # MOSTRAR TABLA COMPLETA (REORDENADA)
     # -------------------------------
-    table_df = df[[
+    table_df = df[[ 
         "Diseño",
-        "Cemento (%)","Agua (%)","Desmonte (%)",
-        "Cemento (kg/m³)","Agua (L/m³)",
-        "Desmonte (kg/m³)","Densidad (kg/m³)",
+        "Cemento (kg/m³)", "Cemento (%)",
+        "Agua (L/m³)", "Agua (%)",
+        "Desmonte (kg/m³)", "Desmonte (%)",
+        "Densidad (kg/m³)",
         "A/C"
     ]].copy()
 
@@ -246,11 +302,10 @@ with tabs[0]:
     # ═══════════════════════════════════════
     # RESISTENCIAS — TABLA EDITABLE
     # ═══════════════════════════════════════
-    st.markdown("### 🧱 Desarrollo de Resistencia a Compresión (MPa) — Editable")
+    st.markdown("###  Desarrollo de Resistencia a Compresión (MPa)")
 
     dias_lista = [7, 14, 21, 28, 56]
 
-    # Inicializar resistencias si no existen
     if "resist_df" not in st.session_state:
         st.session_state.resist_df = pd.DataFrame({
             "Días": dias_lista,
@@ -262,10 +317,10 @@ with tabs[0]:
 
     resist_df = st.session_state.resist_df.copy()
 
-    # Entradas por columnas
-    res_cols = st.columns(5)
+    res_cols = st.columns(4)
+
     for j, d in enumerate(["D01","D02","D03","D04"]):
-        with res_cols[j+1-1]:  # compensación índice
+        with res_cols[j]:
             st.markdown(f"#### {d}")
             for i, dia in enumerate(dias_lista):
                 resist_df.loc[i, d] = st.number_input(
@@ -274,7 +329,6 @@ with tabs[0]:
                     key=f"{d}_{dia}"
                 )
 
-    # Guardar resistencias actualizadas
     st.session_state.resist_df = resist_df
 
     # -------------------------------
@@ -282,65 +336,82 @@ with tabs[0]:
     # -------------------------------
     st.markdown(render_table(resist_df), unsafe_allow_html=True)
 
+    # ==================================================
+    # NUEVA UBICACIÓN → SELECCIÓN DE DISEÑO
+    # ==================================================
+    st.markdown("###  Seleccionar Diseño")
+
+    selected = st.selectbox(
+        "Seleccione un diseño:",
+        df["Diseño"].tolist(),
+        key="select_design"
+    )
+
+    st.session_state.selected_design = selected
+
+    st.info(f"📌 Diseño seleccionado: **{selected}**")
+
     # -------------------------------
-    # GRAFICO DE RESISTENCIAS
+    # GRAFICO DE RESISTENCIAS DINÁMICO
     # -------------------------------
-    st.markdown("### 📈 Curva de Resistencia")
+    st.markdown("###  Curva de Resistencia")
 
     fig_res = go.Figure()
+
     for d, color in zip(["D01","D02","D03","D04"], COLORS):
+
+        width = 4 if d == selected else 2
+        opacity = 1.0 if d == selected else 0.3
+
         fig_res.add_trace(go.Scatter(
-            x=resist_df["Días"], y=resist_df[d],
-            mode="lines+markers", name=d,
-            line=dict(color=color, width=2.5)
+            x=resist_df["Días"],
+            y=resist_df[d],
+            mode="lines+markers",
+            name=d,
+            opacity=opacity,
+            line=dict(color=color, width=width)
         ))
 
     fig_res.update_layout(
         **PLOTLY_LAYOUT,
         height=380,
-        title="Curva de Resistencia vs Tiempo (MPa)"
+        title=f"Curva de Resistencia — Diseño Seleccionado: {selected}"
     )
+
     st.plotly_chart(fig_res, use_container_width=True)
 
     # ---------------------------------
-    # RESISTENCIAS A 28 DÍAS DINÁMICO
+    # GRÁFICO DE 28 DÍAS DINÁMICO
     # ---------------------------------
-    st.markdown("### 🟧 Resistencia a 28 días")
+    st.markdown("###  Resistencia a 28 días")
 
-    res_28 = resist_df[resist_df["Días"]==28].iloc[0][["D01","D02","D03","D04"]].tolist()
+    res_28 = resist_df[resist_df["Días"]==28].iloc[0]
 
     fig_28 = go.Figure()
-    fig_28.add_trace(go.Bar(
-        x=["D01","D02","D03","D04"],
-        y=res_28,
-        marker_color=COLORS,
-        text=[f"{x:.2f} MPa" for x in res_28],
-        textposition="outside"
-    ))
+
+    for d, color in zip(["D01","D02","D03","D04"], COLORS):
+
+        opacity = 1.0 if d == selected else 0.25
+
+        fig_28.add_trace(go.Bar(
+            x=[d],
+            y=[res_28[d]],
+            marker_color=color,
+            opacity=opacity,
+            text=[f"{res_28[d]:.2f} MPa"],
+            textposition="outside"
+        ))
 
     fig_28.update_layout(
         **PLOTLY_LAYOUT,
-        title="Resistencia a 28 días",
+        title=f"Resistencia a 28 días — Diseño: {selected}",
         height=360,
         showlegend=False
     )
+
     st.plotly_chart(fig_28, use_container_width=True)
 
-    # -----------------------------
-    # SELECCIÓN DE DISEÑO
-    # -----------------------------
-    st.markdown("### 🎯 Seleccionar Diseño")
-
-    selected = st.selectbox(
-        "Seleccione un diseño:",
-        df["Diseño"].tolist()
-    )
-
-    st.session_state.selected_design = selected
-
-    st.success(f"✔ Diseño seleccionado: **{selected}**")
-
-    # ╔══════════════════════════════════════════════╗
+# ╔══════════════════════════════════════════════╗
 #  TAB 2 — DISEÑO DE MEZCLA SELECCIONADO (COMPLETO)
 # ╚══════════════════════════════════════════════╝
 with tabs[1]:
