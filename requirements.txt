@@ -1,5 +1,5 @@
-streamlit
-numpy
-pandas
 plotly
+pandas
+numpy
 matplotlib==3.9.2
+streamlit
